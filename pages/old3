@@ -1,0 +1,155 @@
+<template>
+  <section class="container">
+
+      <div class="panel-body ">
+
+          <vue-form-generator :schema="schema1" :model="model1" :options="formOptions"></vue-form-generator>
+
+
+          <vue-form-generator :schema="schema2" :model="model2" :options="formOptions"></vue-form-generator>
+
+
+
+<div class="flex-container">
+        <div class="flex-item">sdf</div>
+        <div class="flex-item">sdf</div>
+    </div>
+
+</div>
+  
+  
+  </section>
+</template>
+
+<script>
+  import Logo from '~/components/Logo.vue'
+  import VueFormGenerator from "vue-form-generator";
+  
+  
+  export default {
+    components: {
+      Logo,
+      "vue-form-generator": VueFormGenerator.component
+    },
+    data: function() {
+      return {
+        model1: {
+          AusCit: '',
+          Title:'',
+          Title2:'',
+          formOptions:''
+        },
+        model2:{
+
+        },
+        schema1: {
+               groups:[{
+                legend: "Section 1 text",
+                fields: [
+                           {
+                            type: "radios",
+                            label: "This product is only offered to individuals who are Australian citizens or permanent residents.",
+                            model: "AusCit",
+                            required: true,
+                            styleClasses:[
+                              "radioStyleCustom",
+                              "col-12"
+                            ],
+                            values: [
+                              "I am an Australian citizen",
+                              " I am an Australian permanent resident"
+                            ]
+                          },
+                ]
+          }]              
+        },
+         schema2: {
+               groups:[{
+
+                 styleClasses:[
+
+                   "flex-container"
+              ],
+                fields: [
+                           {
+              type: "select",
+              label: "Title",
+              model: "Title",
+              required: true,
+              values: [
+                     'Mr',
+                    'Mrs',
+                    'Dr',
+                    'Ms' ,
+                    'Miss',
+                    'Prof',
+                    'Miss' , 
+                    'Master', 
+                ],
+                 styleClasses:[
+              "flex-item"
+              ]
+           },
+           {
+              type: "select",
+              label: "Title",
+              model: "Title",
+              required: true,
+              values: [
+                     'Mr',
+                    'Mrs',
+                    'Dr',
+                    'Ms' ,
+                    'Miss',
+                    'Prof',
+                    'Miss' , 
+                    'Master', 
+                ],
+                 styleClasses:[
+                    "flex-item"
+
+              ]
+           }
+                ]
+          }]              
+        }
+
+
+
+
+
+
+
+
+      }
+    },
+  }
+</script>
+
+<style>
+  .container {
+    min-height: 100vh;
+    display: flex;
+    padding-top: 50px;
+  }
+
+
+.flex-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border: 1px black solid;
+    margin: 0 auto;
+}
+
+.flex-item {
+    width: 100px;
+    height: 200px;
+    border: 1px black solid;
+    background: #369;
+}
+fieldset{
+ display: inline-flex !important;
+}
+
+</style>

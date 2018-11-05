@@ -1,0 +1,62 @@
+       {
+              type: "radios",
+              label: "This product is only offered to individuals who are Australian citizens or permanent residents.",
+              model: "AusCit",
+              required: true,
+              styleClasses:[
+                "radioStyleCustom",
+                 "col-12"
+              ],
+              values: [
+                "I am an Australian citizen",
+                " I am an Australian permanent resident"
+              ]
+            },
+            {
+                  type: "label",
+                  label: "About you",
+                           styleClasses:[
+                "headding",
+                "col-12"
+              ]
+              
+            },
+             {
+              type: "select",
+              label: "Title",
+              model: "Title",
+              required: true,
+              values: [
+                     'Mr',
+                    'Mrs',
+                    'Dr',
+                    'Ms' ,
+                    'Miss',
+                    'Prof',
+                    'Miss' , 
+                    'Master', 
+                ],
+                 styleClasses:[
+                "col-sm-6",
+              ]
+           },
+           {
+              type: "select",
+              label: "Title",
+              model: "Title",
+              required: true,
+              values: [
+                     'Mr',
+                    'Mrs',
+                    'Dr',
+                    'Ms' ,
+                    'Miss',
+                    'Prof',
+                    'Miss' , 
+                    'Master', 
+                ],
+                 styleClasses:[
+                "col-sm-6",
+                "offset-sm-6"
+              ]
+           }

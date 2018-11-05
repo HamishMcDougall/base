@@ -1,0 +1,40 @@
+,
+            {
+              type: "label",
+              label: "This is the first question in underwriting",
+              buttons: [{
+                  classes: "btn btn-primary",
+                  label: "Yes",
+                  onclick: function(model) {
+                    model.question1 = "Yes"
+                  }
+                },
+                {
+                  classes: "btn btn-secondary",
+                  label: "No",
+                  onclick: function(model) {
+                    model.question1 = "No"
+                  }
+                }
+              ]
+            },
+            {
+              type: "label",
+              label: "This is the Second question in underwriting",
+              visible: (model, field, form) => model.question1 === 'Yes' || model.question1 === 'No',
+              buttons: [{
+                  classes: "btn btn-primary",
+                  label: "Yes",
+                  onclick: function(model) {
+                    model.question2 = "Yes"
+                  }
+                },
+                {
+                  classes: "btn btn-secondary",
+                  label: "No",
+                  onclick: function(model) {
+                    model.question2 = "No"
+                  }
+                }
+              ]
+            }
