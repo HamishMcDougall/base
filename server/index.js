@@ -19,7 +19,7 @@ mongoose.connect('mongodb://localhost/vueformgenerator', {
   .catch(err => console.error('Could not connect', err))
 
 // Body parser, to access `req.body`
-//app.use(bodyParser.json())
+app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
 
@@ -104,11 +104,83 @@ app.post('/api/logout', (req, res) => {
   res.json({ ok: true })
 })
 
+// Send email
 
+
+var nodemailer = require('nodemailer');
+
+
+app.post('/api/sendemails', (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+
+  let raceNumber = req.body.raceNumber;
+  let hourseNumber = req.body.hourseNumber;
+  let comment = req.body.comment;
+
+  let body = "Here is your weekend tip! \n \n Race Number: " + raceNumber +" Horse Name " + hourseNumber +" \n \n \nHere is what the tipper had to say... \n" + comment + "\n \n Happy Tipping"
+
+  console.log(req.body);
+
+
+  var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+           user: 'weekendtipsdev@gmail.com',
+           pass: 'Welcome123#'
+       }
+    });
+
+ const mailOptions = {
+  from: 'weekendtipsdev@gmail.com', // sender address
+  to: 'weekendtipsdev@gmail.com', // list of receivers
+  subject: 'This Weeks Tips', // Subject line
+  text: body// plain text body
+};
+ 
+transporter.sendMail(mailOptions, function (err, info) {
+  if(err)
+    console.log(err)
+  else
+    console.log(info);
+});
+
+})
 
 
 var keySecret = 'sk_test_krN7ivlrfhpgP6yts66H7lkN'
 var stripe = require('stripe')(keySecret)
+
+//stripe return all customers - need to update to get all
+app.post('/api/customer' , async (req, res) =>{
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Credentials', true);
+
+  const customercharges = await stripe.charges.list(
+    { limit: 3 , "include[]": "total_count"},
+    function(err, charges) {
+      // only customer data
+      let data = charges;
+      if (err) { console.warn(err) } else {
+        res.status(200).send(data)
+      }
+    }
+  );
+ 
+  /*
+  const customercharges = await stripe.charges.retrieve("ch_1AgAgVI5bo7i0h67QA2JJZwM", {
+    api_key: "sk_test_krN7ivlrfhpgP6yts66H7lkN"
+  });
+*/
+   //  res.status(200).send(customercharges);
+    
+  });
+
+
+
+
+//Stripe subscription
 
 
 
@@ -124,10 +196,7 @@ app.post('/api/payment', function(req, res) {
     receipt_email: email
   }, function(err, customer) {
     if (err) { console.warn(err) } else {
-  
-
       var id = customer.id
-
       const subscription = stripe.subscriptions.create({
         customer: id,
         items: [{
@@ -138,8 +207,7 @@ app.post('/api/payment', function(req, res) {
          res.status(200).send(charge)
         }
       });
-      
-   
+        
     }
   });
 
@@ -149,18 +217,6 @@ app.post('/api/payment', function(req, res) {
   // this is a single chage
 
   /*
-
-     const subscription = stripe.subscriptions.create({
-        customer: id,
-        items: [{
-          plan: "Gold",
-      }],
-      }, function(err, charge) {
-        if (err) { console.warn(err) } else {
-         res.status(200).send(charge)
-        }
-      });
-
 
   var charge = stripe.charges.create({
     amount: 1700, // create a charge for 1700 cents USD ($17)
@@ -174,8 +230,12 @@ app.post('/api/payment', function(req, res) {
   })
 
   */
+
+
 });
 
+
+// end stripe subscription
 
 
 

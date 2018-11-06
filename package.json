@@ -40,6 +40,7 @@
     "moment": "^2.22.2",
     "mongodb": "^3.1.8",
     "mongoose": "^5.3.8",
+    "nodemailer": "^4.6.8",
     "npm": "^6.4.1",
     "nuxt": "^2.0.0",
     "pikaday": "^1.8.0",
