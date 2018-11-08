@@ -12,7 +12,8 @@ const Joi = require('joi')
 const host = process.env.HOST || '127.0.0.1'
 const port = process.env.PORT || 3000
 
-mongoose.connect('mongodb://localhost/vueformgenerator', {
+mongoose.connect(process.env.MONGODB_URI 
+  || 'mongodb://localhost/vueformgenerator', {
     useNewUrlParser: true
   })
   .then(() => console.log('Connect to MongoDB'))
@@ -110,6 +111,8 @@ app.post('/api/logout', (req, res) => {
 var nodemailer = require('nodemailer');
 
 
+
+
 app.post('/api/sendemails', (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Credentials', true);
@@ -119,7 +122,16 @@ app.post('/api/sendemails', (req, res) => {
   let hourseNumber = req.body.hourseNumber;
   let comment = req.body.comment;
 
-  let body = "Here is your weekend tip! \n \n Race Number: " + raceNumber +" Horse Name " + hourseNumber +" \n \n \nHere is what the tipper had to say... \n" + comment + "\n \n Happy Tipping"
+  let body = `Here is your weekend tip! 
+  
+ Race Number: ${raceNumber} 
+ Horse Name ${hourseNumber} 
+ 
+ Here is what the tipper had to say... 
+ ${comment} 
+ 
+ 
+ Happy Tipping`
 
   console.log(req.body);
 
@@ -136,7 +148,7 @@ app.post('/api/sendemails', (req, res) => {
   from: 'weekendtipsdev@gmail.com', // sender address
   to: 'weekendtipsdev@gmail.com', // list of receivers
   subject: 'This Weeks Tips', // Subject line
-  text: body// plain text body
+  text: body // plain text body
 };
  
 transporter.sendMail(mailOptions, function (err, info) {
