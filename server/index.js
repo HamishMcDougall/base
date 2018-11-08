@@ -140,7 +140,7 @@ app.post('/api/sendemails', (req, res) => {
     service: 'gmail',
     auth: {
            user: 'weekendtipsdev@gmail.com',
-           pass: 'Welcome123#'
+           pass: ''
        }
     });
 
@@ -161,7 +161,7 @@ transporter.sendMail(mailOptions, function (err, info) {
 })
 
 
-var keySecret = 'sk_test_krN7ivlrfhpgP6yts66H7lkN'
+var keySecret = ''
 var stripe = require('stripe')(keySecret)
 
 //stripe return all customers - need to update to get all
