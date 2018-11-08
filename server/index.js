@@ -161,7 +161,8 @@ transporter.sendMail(mailOptions, function (err, info) {
 })
 
 
-var keySecret = ''
+keySecret = ''
+
 var stripe = require('stripe')(keySecret)
 
 //stripe return all customers - need to update to get all
@@ -203,7 +204,8 @@ app.post('/api/payment', function(req, res) {
 
 
   const customer = stripe.customers.create({
-    email: email,
+   // email: email,
+    description: 'Subscribed to weekend tips Gold',
     source: token,
     receipt_email: email
   }, function(err, customer) {
